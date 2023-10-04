@@ -22,6 +22,11 @@ class UserprofileService
         return Userprofile::where('user_name', Auth::user()->name)->get();
     }
 
+    public function getMyprofilesedit()
+    {
+        return Userprofile::where('user_name', Auth::user()->name)->get();
+    }
+
     //自分の投稿かどうかをチェックするメソッド
     public function checkOwnProfile(int $userId, int $userprofileId): bool
     {

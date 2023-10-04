@@ -10,6 +10,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');
+
 Route::get('/mentee', [UserprofileController::class, 'mentee'])->middleware(['auth'])->name('menteeprofiles');
 Route::get('/mentor', [UserprofileController::class, 'mentor'])->middleware(['auth'])->name('mentorprofiles');
 Route::get('/myprofile', [UserprofileController::class, 'myprofile'])->middleware(['auth'])->name('myprofiles');
@@ -22,11 +26,10 @@ Route::post('/userprofiles', [UserprofileController::class, "store"])->name('use
 Route::delete('/userprofile/{userprofile}', [UserprofileController::class, "destroy"])->name('userprofile_destroy');
 
 //プロフィール更新画面
-// Route::post('/userprofileedit/{userprofile}', [UserprofileController::class, "edit"])->name('userprofile_edit'); //通常
-// Route::get('/userprofileedit/{userprofile}', [UserprofileController::class, "edit"])->name('edit');      //Validationエラーありの場合
+Route::post('/myprofileedit/{profileId}', [UserprofileController::class, "myprofileedit"])->name('myprofileedit');
 
 //プロフィール更新画面
-Route::post('/userprofile/update', [UserprofileController::class, "update"])->name('userprofile_update');
+Route::put('/userprofile/update/{profileId}', [UserprofileController::class, "update"])->name('userprofile_update');
 
 /**
  * 「ログイン機能」インストールで追加されています 

@@ -90,7 +90,7 @@
                 {{ __('メンター一覧') }}
             </x-responsive-nav-link>
         </div>
-
+        
         <div class="pt-2 pb-3 space-y-1">
             <x-responsive-nav-link :href="route('myprofiles')" :active="request()->routeIs('myprofiles')">
                 {{ __('自分のプロフィール') }}

@@ -40,6 +40,14 @@ class UserprofileController extends Controller
         ->with('myprofile', $myprofile);
     }
 
+    public function myprofileedit(UserprofileService $userprofileService)
+    {
+        $myprofile = $userprofileService->getMyprofiles(); //ツイートの一覧を取得
+
+        return view('myprofileedit')
+        ->with('myprofile', $myprofile);
+    }
+
     /**
      * Show the form for creating a new resource.
      */
@@ -127,6 +135,10 @@ class UserprofileController extends Controller
      */
     public function update(UpdateRequest $request, Userprofile $userprofile)
     {
+        $userprofiles = Userprofile::where('id', $request->id())->firstOrFail();
+        $userprofiles->user_name = Auth::user()->name;
+        $userprofiles->role = Auth::user()->role;
+        $userprofiles->user_nickname = $request->user_nickname();
         $image = $request->file('fname');
         if ($image) {
             // ファイル名を生成
@@ -134,15 +146,9 @@ class UserprofileController extends Controller
 
             // 画像を指定のディレクトリに保存
             $image->move('../storage/app/public/images', $filename);
+            $userprofiles->fname = $filename;
+        } else {
         }
-        else{
-            $filename = '';
-        }
-        $userprofiles = Userprofile::find($request->id);
-        $userprofiles->user_name = Auth::user()->name;
-        $userprofiles->role = Auth::user()->role;
-        $userprofiles->user_nickname = $request->user_nickname();
-        $userprofiles->fname = $filename;
         $userprofiles->sns = $request->sns();
         $userprofiles->department = $request->department();
         $userprofiles->detail = $request->detail();

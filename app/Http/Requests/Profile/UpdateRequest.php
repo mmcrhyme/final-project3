@@ -46,6 +46,11 @@ class UpdateRequest extends FormRequest
         ];
     }
 
+    public function id(): int
+    {
+        return (int) $this->route('profileId');
+    }
+
     public function user_nickname(): string
     {
         return $this->input('user_nickname');
